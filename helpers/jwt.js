@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const ApiError = require('../middlewares/error/ApiError');
 
 module.exports = {
-	signAccessToken: (userID, status) => {
+	signAccessToken: (IDuser, status) => {
 		return new Promise((resolve, reject) => {
 			const payload = {
 				status: status,
@@ -12,7 +12,7 @@ module.exports = {
 			const option = {
 				expiresIn: '1h',
 				issuer: 'onetwo.com',
-				audience: userID,
+				audience: IDuser,
 			};
 			jwt.sign(payload, secret, option, (err, token) => {
 				if (err) reject(err);
