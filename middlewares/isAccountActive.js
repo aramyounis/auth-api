@@ -5,7 +5,6 @@ const isAccountActive = async (req, res, next) => {
 		return user;
 	});
 	if (user.status) {
-		req.status = user.status;
 		next();
 	} else {
 		res.send('Account Not Actived');
