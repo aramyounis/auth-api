@@ -26,10 +26,10 @@ const register = async (req, res, next) => {
 		return await quires.getuser.byEmail(result.email).then(async (user) => {
 			const Refresh_Token = await signRefreshToken(user.id);
 			const Access_Token = await signAccessToken(user.id, user.status);
-			return { Refresh_Token, Access_Token };
+			return { Access_Token, Refresh_Token };
 		});
 	});
-	res.send({ userTokens });
+	res.send(userTokens);
 };
 
 module.exports = register;

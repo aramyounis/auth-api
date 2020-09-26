@@ -20,7 +20,6 @@ module.exports = {
 			});
 		});
 	},
-
 	verifyAccessToken: (req, res, next) => {
 		if (!req.headers['authorization']) throw ApiError.badRequest('Unauthorized');
 		const token = req.headers['authorization'].split(' ')[1];

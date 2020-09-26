@@ -1,9 +1,6 @@
+const path = require('path');
 const home = async (req, res, next) => {
-	const active = req.payload.status;
-	if (active) res.send('active');
-	else {
-		res.send('Not active');
-	}
+	res.sendFile(path.join(__dirname + '/file/active.html'));
 };
 
 module.exports = home;
