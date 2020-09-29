@@ -17,7 +17,7 @@ const app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+app.use(cors());
 //route root
 app.use(homeRoute);
 
@@ -30,7 +30,6 @@ app.use('/auth', authRoute);
 app.use(apiErrorHandler);
 
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
 	console.log(`Server Started on port: ${PORT}`);
 });

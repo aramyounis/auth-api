@@ -5,6 +5,7 @@ function apiErrorHandler(err, req, res, next) {
 
 	if (err instanceof ApiError) {
 		res.status(err.code).json({
+			status: false,
 			error_code: err.code,
 			error_message: err.msg,
 		});
@@ -12,6 +13,7 @@ function apiErrorHandler(err, req, res, next) {
 		if (err.isJoi == true) {
 			res.status(422).json({
 				error: {
+					status: false,
 					error_code: 422,
 					error_message: err.message,
 				},
@@ -19,6 +21,7 @@ function apiErrorHandler(err, req, res, next) {
 		} else {
 			res.status(500).json({
 				error: {
+					status: false,
 					error_message: 'Some think went worng',
 				},
 			});

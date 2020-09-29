@@ -1,12 +1,9 @@
-const { loginValidation } = require('../helpers/validation/loginValidator');
 const quires = require('../Models/User_quires');
 const ApiError = require('../middlewares/error/ApiError');
 const { signAccessToken, signRefreshToken } = require('../helpers/jwt');
-const path = require('path');
 
 const login = async (req, res, next) => {
-	const result = await loginValidation.validateAsync(req.body);
-
+	const result = req.result;
 	const checkEmail = await quires.getuser.byEmail(result.email).then(async (user) => {
 		return user;
 	});
@@ -20,7 +17,7 @@ const login = async (req, res, next) => {
 	const Refresh_Token = await signRefreshToken(checkEmail.id);
 
 	// res.sendFile(path.join(__dirname + '/log.html'));
-	res.send({ Access_Token, Refresh_Token });
+	res.send({ status: true, Access_Token, Refresh_Token });
 };
 
 module.exports = login;

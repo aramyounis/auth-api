@@ -1,11 +1,11 @@
-const { rigisterValidation } = require('../helpers/validation/registerValid');
+const { rigisterValidation } = require('../middlewares/validateDataReq');
 const quires = require('../Models/User_quires');
 const ApiError = require('../middlewares/error/ApiError');
 const { signAccessToken, signRefreshToken } = require('../helpers/jwt');
 
 const register = async (req, res, next) => {
 	//bo validate krdni datakane user aineret {email,username,passowrd}
-	const result = await rigisterValidation.validateAsync(req.body);
+	const result = req.result;
 
 	//bo dllnyabunawa la emaile ka peshtr bakar nahatbet
 	const existsEmail = await quires.getuser.byEmail(result.email).then((email) => {
@@ -26,7 +26,7 @@ const register = async (req, res, next) => {
 		return await quires.getuser.byEmail(result.email).then(async (user) => {
 			const Refresh_Token = await signRefreshToken(user.id);
 			const Access_Token = await signAccessToken(user.id, user.status);
-			return { Access_Token, Refresh_Token };
+			return { status: true, Access_Token, Refresh_Token };
 		});
 	});
 	res.send(userTokens);
