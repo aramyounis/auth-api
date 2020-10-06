@@ -5,8 +5,8 @@ const reqDataRegister = async (req, res, next) => {
 	const result = await joi
 		.object({
 			email: joi.string().email().lowercase().required(),
-			username: joi.string().min(3).required(),
-			passowrd: joi.string().min(4).required(),
+			username: joi.string().min(5).required(),
+			passowrd: joi.string().min(6).required(),
 		})
 		.validateAsync(req.body);
 	if (!result.error) {
