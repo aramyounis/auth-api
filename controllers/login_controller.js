@@ -17,7 +17,7 @@ const login = async (req, res, next) => {
 	const Refresh_Token = await signRefreshToken(checkEmail.id);
 
 	// res.sendFile(path.join(__dirname + '/log.html'));
-	res.send({ status: true, Access_Token, Refresh_Token });
+	res.json({ status: true, Access_Token, Refresh_Token });
 };
 
 module.exports = login;

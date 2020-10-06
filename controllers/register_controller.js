@@ -1,4 +1,3 @@
-const { rigisterValidation } = require('../middlewares/validateDataReq');
 const quires = require('../Models/User_quires');
 const ApiError = require('../middlewares/error/ApiError');
 const { signAccessToken, signRefreshToken } = require('../helpers/jwt');
@@ -19,17 +18,15 @@ const register = async (req, res, next) => {
 	if (existsEmail) throw ApiError.badRequest('The Email Aledy Used');
 
 	//garandnaway error agar username peshtr tomar krabu
-	if (existsUsername) throw ApiError.badRequest('Please Change You Username');
+	if (existsUsername) throw ApiError.badRequest('Please Change Your Username');
 
 	//tomar krdni useraka agar hich errorek nabu
 	const userTokens = await quires.setuser(result.username, result.email, result.passowrd).then(async () => {
 		return await quires.getuser.byEmail(result.email).then(async (user) => {
-			const Refresh_Token = await signRefreshToken(user.id);
-			const Access_Token = await signAccessToken(user.id, user.status);
-			return { status: true, Access_Token, Refresh_Token };
+			return { status: true, message: 'Successfuly Register' };
 		});
 	});
-	res.send(userTokens);
+	res.json(userTokens);
 };
 
 module.exports = register;

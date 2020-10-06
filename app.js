@@ -1,29 +1,29 @@
 const express = require('express');
-const morgan = require('morgan');
+const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const app = express();
 require('dotenv').config();
 
-//bang krdnaway routeakanman
-const authRoute = require('./routes/auth.route');
 const apiErrorHandler = require('./middlewares/error/api_error_handler');
-const homeRoute = require('./routes/home.route');
 
-const app = express();
+//bang krdnaway routeakanman
+const auth = require('./routes/Auth');
+const home = require('./routes/home');
 
 //midlwares
 //po pishandanaway requestakan la consolea
-app.use(morgan('dev'));
+app.use(volleyball);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 //route root
-app.use(homeRoute);
+app.use(home);
 
 //midlware routers
 //bakar henani routeakanman la regai midleware
-app.use('/auth', authRoute);
+app.use('/auth', auth);
 
 //midlware error handler
 //handel krdni error

@@ -8,7 +8,7 @@ const isAccountActive = async (req, res, next) => {
 	});
 	if (user.status) next();
 
-	const data = await fs.readFileSync(path.join('../onetwo_api/fileToSend/noActive.html'), 'utf8');
+	const data = await fs.readFileSync(path.join('../server/fileToSend/noActive.html'), 'utf8');
 	res.json({ data });
 };
 module.exports = isAccountActive;
