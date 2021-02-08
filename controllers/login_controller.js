@@ -28,7 +28,18 @@ const login = async (req, res, next) => {
     checkEmail.email
   );
 
-  res.json({ status: true, Access_Token, Refresh_Token, Verify_Token });
+  res.json({
+    status: true,
+    Access_Token,
+    Refresh_Token,
+    Verify_Token,
+    user: {
+      UserName: checkEmail.user_name,
+      Email: checkEmail.email,
+      Verify: checkEmail.verify,
+      status: checkEmail.status,
+    },
+  });
 };
 
 module.exports = login;
