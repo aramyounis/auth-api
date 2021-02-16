@@ -18,6 +18,7 @@ app.use(volleyball);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
+
 //route root
 app.use(home);
 

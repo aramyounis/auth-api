@@ -6,7 +6,7 @@ exports.up = async function (knex) {
     table.uuid("id").primary().defaultTo(knex.raw("uuid_generate_v4()"));
     table.string("user_name").notNullable();
     table.string("email").notNullable();
-    table.string("passowrd").notNullable();
+    table.string("password").notNullable();
     table.string("veriFyToken");
     table.boolean("verify").defaultTo(false);
     table.boolean("status").defaultTo(false);

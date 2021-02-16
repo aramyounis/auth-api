@@ -22,14 +22,21 @@ module.exports = {
     },
   },
   //bo tomarkrdni user
-  setuser: async function (user_name, email, passowrd) {
+  setuser: async function (user_name, email, password) {
     const salt = await bcrypt.genSalt(10);
-    passowrd = await bcrypt.hash(passowrd, salt);
-    return knex("users").insert([{ user_name, email, passowrd }]);
+    console.log(password);
+    password = await bcrypt.hash(password, salt);
+    return knex("users").insert([{ user_name, email, password }]);
   },
-  validatePassowrd: async function (email, passowrd) {
+  validatePassword: async function (email, password) {
     return await this.getuser.byEmail(email).then(async (user) => {
-      return await bcrypt.compare(passowrd, user.passowrd);
+      return await bcrypt.compare(password, user.password);
     });
+  },
+  updateVerifyEmail: async (id) => {
+    return knex("users")
+      .where("id", "=", id)
+      .update({ verify: true })
+      .clearCounters();
   },
 };

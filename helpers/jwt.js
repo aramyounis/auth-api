@@ -48,10 +48,21 @@ module.exports = {
       });
     });
   },
-  signVerifyEmailToken: (userID, email) => {
+
+  verifyRefreshToken(req, res, next) {
+    if (!req.headers["authorization"])
+      throw ApiError.badRequest("Unauthorized");
+    const token = req.headers["authorization"].split(" ")[1];
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
+      if (err) throw ApiError.badRequest("Unauthorized");
+      req.payload = payload;
+      next();
+    });
+  },
+  signEmailTokenToVerify: (userID, status) => {
     return new Promise((resolve, reject) => {
       const payload = {
-        eml: email,
+        status: status,
       };
       const secret = process.env.EMAIL_VERIFY_SECRET;
 
@@ -64,6 +75,16 @@ module.exports = {
         if (err) reject(err);
         resolve(token);
       });
+    });
+  },
+  verifyEmailTokenToVerify(req, res, next) {
+    const { verifyToken } = req.params;
+    console.log(verifyToken);
+    if (!verifyToken) throw ApiError.badRequest("Unauthorized");
+    jwt.verify(verifyToken, process.env.EMAIL_VERIFY_SECRET, (err, payload) => {
+      if (err) throw ApiError.badRequest("Unauthorized");
+      req.payload = payload;
+      next();
     });
   },
 };

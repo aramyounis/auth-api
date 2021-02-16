@@ -14,25 +14,23 @@ const login = async (req, res, next) => {
       return user;
     });
 
-  if (!checkEmail) throw ApiError.badRequest(`Email or Passowrd Invalid!`);
+  if (!checkEmail) throw ApiError.badRequest(`Email or Password Invalid!`);
 
-  const checkPassowrd = await quires.validatePassowrd(
+  const checkPassword = await quires.validatePassword(
     result.email,
-    result.passowrd
+    result.password
   );
-  if (!checkPassowrd) throw ApiError.badRequest(`Email or Passowrd Invalid!`);
+  if (!checkPassword) throw ApiError.badRequest(`Email or password Invalid!`);
   const Access_Token = await signAccessToken(checkEmail.id, checkEmail.status);
-  const Refresh_Token = await signRefreshToken(checkEmail.id);
-  const Verify_Token = await signVerifyEmailToken(
+  const Refresh_Token = await signRefreshToken(
     checkEmail.id,
-    checkEmail.email
+    checkEmail.status
   );
 
   res.json({
     status: true,
     Access_Token,
     Refresh_Token,
-    Verify_Token,
     user: {
       UserName: checkEmail.user_name,
       Email: checkEmail.email,

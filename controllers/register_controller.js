@@ -1,9 +1,9 @@
 const quires = require("../Models/User_quires");
 const ApiError = require("../middlewares/error/ApiError");
-const { signAccessToken, signRefreshToken } = require("../helpers/jwt");
-
+const { signEmailTokenToVerify } = require("../helpers/jwt");
+const sendEmail = require("../helpers/sendEmail");
 const register = async (req, res, next) => {
-  //bo validate krdni datakane user aineret {email,username,passowrd}
+  //bo validate krdni datakane user aineret {email,username,password}
   const result = req.result;
 
   //bo dllnyabunawa la emaile ka peshtr bakar nahatbet
@@ -25,13 +25,26 @@ const register = async (req, res, next) => {
   if (existsUsername) throw ApiError.badRequest("Please Change Your Username");
 
   //tomar krdni useraka agar hich errorek nabu
+
   const userTokens = await quires
-    .setuser(result.username, result.email, result.passowrd)
+    .setuser(result.username, result.email, result.password)
     .then(async () => {
-      return await quires.getuser.byEmail(result.email).then(async (user) => {
-        return { status: true, message: "Successfuly Register" };
-      });
+      const userInfo = await quires.getuser.byEmail(result.email);
+
+      const verifyEmailToken = await signEmailTokenToVerify(
+        userInfo.id,
+        userInfo.status
+      );
+      //nardni emaile verification
+      const checkEmailSend = await sendEmail(result.email, verifyEmailToken);
+
+      return {
+        status: true,
+        message:
+          "Successfuly Registered Check Your Email To Verify Your Account",
+      };
     });
+
   res.json(userTokens);
 };
 
