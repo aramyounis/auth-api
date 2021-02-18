@@ -1,0 +1,67 @@
+/*بەردەستخستنی فۆنت لەگەڵ پرگرام*/
+
+@font-face {
+  src: url(../FontGilroy/gilroy-semibold.ttf);
+  font-family: gilroy-semibold;
+}
+@font-face {
+  src: url(../FontGilroy/gilroy-regular.ttf);
+  font-family: gilroy-regular;
+}
+body {
+  background: linear-gradient(45deg, #4d567b, #292d55);
+  font-family: gilroy-semibold;
+}
+
+.box1 {
+  width: 90%;
+  max-width: 1070px;
+  height: 720px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border-radius: 33px;
+  border: 3px solid #212438;
+  box-shadow: inset 0 1px 2px 0 #000, inset 0 1px 1px 0 #000;
+  background-image: -moz-radial-gradient(top, circle, #25294a 0%, #171a31 70%);
+  background-image: -webkit-radial-gradient(top, circle, #25294a 0%, #171a31);
+  background-image: radial-gradient(circle at top, #25294a 0%, #171a31 70%);
+  justify-content: center;
+  align-content: center;
+  display: grid;
+}
+
+span {
+  font-size: 2rem;
+  color: #00ffa0;
+}
+
+.class_error {
+  text-align: center;
+  padding: 2rem;
+}
+
+p {
+  padding: 0;
+  margin: 0;
+  color: #5a5d7d;
+}
+
+p:nth-child(2) {
+  font-size: 28vmin;
+}
+p:nth-child(3) {
+  color: #00ffa0;
+  font-size: 28px;
+  margin-bottom: 28px;
+}
+
+p:nth-child(4) {
+  font-size: 16px;
+}

@@ -1,0 +1,262 @@
+/*بەردەستخستنی فۆنت لەگەڵ پرگرام*/
+
+@font-face {
+  src: url(../FontGilroy/gilroy-semibold.ttf);
+  font-family: gilroy-semibold;
+}
+@font-face {
+  src: url(../FontGilroy/gilroy-regular.ttf);
+  font-family: gilroy-regular;
+}
+body {
+  background: linear-gradient(45deg, #4d567b, #292d55);
+  font-family: gilroy-semibold;
+}
+
+.box1 {
+  width: 90%;
+  max-width: 1070px;
+  height: 720px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  border-radius: 33px;
+  border: 3px solid #212438;
+  box-shadow: inset 0 1px 2px 0 #000, inset 0 1px 1px 0 #000;
+  background-image: -moz-radial-gradient(top, circle, #25294a 0%, #171a31 70%);
+  background-image: -webkit-radial-gradient(top, circle, #25294a 0%, #171a31);
+  background-image: radial-gradient(circle at top, #25294a 0%, #171a31 70%);
+  align-content: center;
+  display: grid;
+}
+
+h3 {
+  font-size: 25px;
+  color: #5a5d7d;
+}
+
+.header {
+  text-align: center;
+}
+
+#box_rigestr {
+  width: 95%;
+  max-width: 444px;
+  height: 415px;
+  display: grid;
+  /* align-content: center; */
+  margin: 0 auto;
+}
+
+.form {
+  width: 100%;
+  height: 100%;
+}
+
+.form-control {
+  padding-bottom: 20px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form-control label {
+  display: block;
+  margin-bottom: 5px;
+  color: #5a5d7d;
+  font-size: 18px;
+}
+
+.form-control input {
+  border: 2px solid #3a3c55;
+  border-radius: 4px;
+  display: block;
+  font-size: 14px;
+  padding: 5px 9px 5px 9px;
+  width: 92%;
+  background: #131526ba;
+  color: #5a5d7d;
+  margin: 0 auto;
+}
+
+.form-control input:focus {
+  outline: 0;
+  border-color: #62647b;
+}
+
+.form-control.success input {
+  border-color: #00ffa0;
+}
+
+.form-control.error input {
+  border-color: #e74c3c;
+}
+
+.form-control small {
+  color: #e74c3c;
+  font-size: 13px;
+  visibility: hidden;
+  font-family: gilroy-regular;
+}
+
+.form-control.error small {
+  visibility: visible;
+}
+
+.form-control smallLogin {
+  color: #e74c3c;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 13px;
+  visibility: hidden;
+  font-family: gilroy-regular;
+}
+
+.form-control.error smallLogin {
+  visibility: visible;
+}
+
+.form .btsubmit {
+  background-color: #00ffa0;
+  border-style: none;
+  border-radius: 4px;
+  color: #252844;
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  cursor: pointer;
+  font-family: gilroy-semibold;
+  margin: 0 auto;
+}
+
+.btsubmit:hover {
+  background: white;
+}
+
+.btsubmit:active {
+  background: #5a5d7d;
+}
+
+/*-------------------------------------------------------------------*/
+.rigsee span {
+  content: "\2713";
+  font-size: 23px;
+  padding: 0px 6px 0px 6px;
+  text-align: center;
+  color: #00ffa0;
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: rgba(255, 255, 255, 0.3);
+  border-top-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #00ffa0;
+  margin-bottom: 10rem;
+  animation: 1s spin infinite ease-in-out;
+  position: absolute;
+  top: 7px;
+  left: 5px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rigsee {
+  background: #1b1e30;
+  width: 172px;
+  padding: 7px;
+  border-radius: 10px;
+  height: 34px;
+  top: 31%;
+  right: 41%;
+  position: absolute;
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.5s;
+  opacity: 0;
+}
+
+.showrigsee {
+  visibility: visible;
+  opacity: 1;
+}
+
+.rigsee p {
+  color: #a7a8b5;
+  font-size: 14px;
+  margin: 0px;
+  right: -39px;
+  position: relative;
+  top: -23px;
+  width: 197px;
+}
+
+/*-------------box error--------------*/
+
+.error-spinner span {
+  content: "\2713";
+  font-size: 23px;
+  padding: 0px 6px 0px 6px;
+  text-align: center;
+  color: #ff3434;
+}
+
+.loading-error {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255, 149, 149, 0.3);
+  border-top-color: rgba(255, 149, 149, 0.3);
+  border-radius: 50%;
+  border-top-color: #ff3434;
+  margin-bottom: 10rem;
+  animation: 1s spin infinite ease-in-out;
+  position: absolute;
+  top: 7px;
+  left: 5px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-spinner {
+  background: #1b1e30;
+  width: 145px;
+  padding: 7px;
+  border-radius: 10px;
+  height: 34px;
+  top: 30%;
+  left: 42%;
+  position: absolute;
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.5s;
+  opacity: 0;
+}
+
+.show-error-spinner {
+  visibility: visible;
+  opacity: 1;
+}
+
+.error-spinner p {
+  color: #a7a8b5;
+  font-size: 14px;
+  margin: 0px;
+  right: -40px;
+  position: relative;
+  top: -23px;
+  width: 128px;
+}

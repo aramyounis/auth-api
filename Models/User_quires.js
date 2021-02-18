@@ -28,8 +28,8 @@ module.exports = {
     password = await bcrypt.hash(password, salt);
     return knex("users").insert([{ user_name, email, password }]);
   },
-  validatePassword: async function (email, password) {
-    return await this.getuser.byEmail(email).then(async (user) => {
+  validatePassword: async function (id, password) {
+    return await this.getuser.byID(id).then(async (user) => {
       return await bcrypt.compare(password, user.password);
     });
   },
@@ -37,6 +37,14 @@ module.exports = {
     return knex("users")
       .where("id", "=", id)
       .update({ verify: true })
+      .clearCounters();
+  },
+  updatePassword: async (id, oldPass, newPass) => {
+    const salt = await bcrypt.genSalt(10);
+    newPass = await bcrypt.hash(newPass, salt);
+    return knex("users")
+      .where("id", "=", id, "password", "=", oldPass)
+      .update({ password: newPass })
       .clearCounters();
   },
 };

@@ -1,8 +1,8 @@
 const quires = require("../Models/User_quires");
 
 const getInformation = async (req, res, next) => {
-  const { aud } = req.payload;
-  const user = await quires.getuser.byID(aud).then((user) => {
+  const payload = req.payload;
+  const user = await quires.getuser.byID(payload.audience).then((user) => {
     return user;
   });
   res.json({

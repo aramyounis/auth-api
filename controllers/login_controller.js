@@ -1,10 +1,6 @@
 const quires = require("../Models/User_quires");
 const ApiError = require("../middlewares/error/ApiError");
-const {
-  signVerifyEmailToken,
-  signAccessToken,
-  signRefreshToken,
-} = require("../helpers/jwt");
+const { signAccessToken, signRefreshToken } = require("../helpers/jwt");
 
 const login = async (req, res, next) => {
   const result = req.result;
@@ -17,7 +13,7 @@ const login = async (req, res, next) => {
   if (!checkEmail) throw ApiError.badRequest(`Email or Password Invalid!`);
 
   const checkPassword = await quires.validatePassword(
-    result.email,
+    checkEmail.id,
     result.password
   );
   if (!checkPassword) throw ApiError.badRequest(`Email or password Invalid!`);

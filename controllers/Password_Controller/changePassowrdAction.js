@@ -1,32 +1,40 @@
-const quires = require("../Models/User_quires");
-const ApiError = require("../middlewares/error/ApiError");
+const quires = require("../../Models/User_quires");
+const ApiError = require("../../middlewares/error/ApiError");
 const jwt = require("jsonwebtoken");
 
 //bo verify krdni useraka la kate krdnawai emailakay w krdnawai linkaka
-const setEmailVerification = async (req, res, next) => {
+const changePassowrdAction = async (req, res, next) => {
   try {
     const payload = req.payload;
+    const result = req.result;
+
+    console.log(result, payload);
     const checkUser = await quires.getuser
       .byID(payload.aud)
       .then(async (user) => {
         return user;
       });
+
+    const checkPassword = await quires.validatePassword(
+      checkUser.id,
+      result.password
+    );
+
     //dllnyabunawa ka useraka bune habet
     if (!checkUser) {
       next(ApiError.badRequest("Unauthorized"));
       return;
     }
-    //dllnyabunawa lawai accountaka verify nakrawa peshtr
-    else if (checkUser.verify) {
-      res.json({ Message: "Your Already Verify" });
+    if (!checkPassword) {
+      next(ApiError.badRequest("Check Your Information"));
       return;
     }
 
-    //agar verify nakrabu awa verify akret
+    // //gorene passowrdaka
     await quires
-      .updateVerifyEmail(payload.aud)
+      .updatePassword(payload.aud, result.newPassword, result.newPassword)
       .then(async () => {
-        res.json({ Message: "Verification Successfully" });
+        res.json({ Message: "Passowrd Changed  Successfully" });
       })
       .catch((err) => {
         console.log(err);
@@ -38,4 +46,4 @@ const setEmailVerification = async (req, res, next) => {
   }
 };
 
-module.exports = setEmailVerification;
+module.exports = changePassowrdAction;

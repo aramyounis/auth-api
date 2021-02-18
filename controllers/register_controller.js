@@ -1,7 +1,7 @@
 const quires = require("../Models/User_quires");
 const ApiError = require("../middlewares/error/ApiError");
 const { signEmailTokenToVerify } = require("../helpers/jwt");
-const sendEmail = require("../helpers/sendEmail");
+const { emailSendVerification } = require("../helpers/sendEmail");
 const register = async (req, res, next) => {
   //bo validate krdni datakane user aineret {email,username,password}
   const result = req.result;
@@ -36,7 +36,10 @@ const register = async (req, res, next) => {
         userInfo.status
       );
       //nardni emaile verification
-      const checkEmailSend = await sendEmail(result.email, verifyEmailToken);
+      const checkEmailSend = await emailSendVerification(
+        result.email,
+        verifyEmailToken
+      );
 
       return {
         status: true,

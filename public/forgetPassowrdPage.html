@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../static/css/Style-change-pass.css" />
+    <title>new password</title>
+  </head>
+
+  <body>
+    <div class="box1">
+      <div id="box_rigestr">
+        <div class="header">
+          <h3>Enter your new password below.</h3>
+        </div>
+        <!------------access box------------>
+
+        <div class="rigsee">
+          <span>&#10003;</span>
+          <div class="loading-spinner"></div>
+          <p>Password Updated</p>
+        </div>
+
+        <!-------error box-------->
+        <div class="error-spinner">
+          <span>&#10005;</span>
+          <div class="loading-error"></div>
+          <p>Update Failed</p>
+        </div>
+
+        <!------------------------>
+        <form id="formRegister" class="form">
+          <div class="form-control">
+            <label>New password</label>
+            <input type="password" id="password" />
+            <small>Error message</small>
+          </div>
+          <!------------------------>
+          <div class="form-control">
+            <label>Re-enter password</label>
+            <input type="password" id="password2" />
+            <small>Error message</small>
+          </div>
+          <button class="btsubmit" id="btaccess">Change Password</button>
+        </form>
+        <!------------------------>
+      </div>
+    </div>
+    <!----------------------------->
+    <script src="https://unpkg.com/axios@0.20.0-0/dist/axios.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../../static/js/js-forget-pass.js"
+    ></script>
+  </body>
+</html>

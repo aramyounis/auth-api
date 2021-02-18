@@ -1,7 +1,7 @@
-const ApiError = require("../middlewares/error/ApiError");
-const quires = require("../Models/User_quires");
-const { signEmailTokenToVerify } = require("../helpers/jwt");
-const sendEmail = require("../helpers/sendEmail");
+const ApiError = require("../../middlewares/error/ApiError");
+const quires = require("../../Models/User_quires");
+const { signEmailTokenToVerify } = require("../../helpers/jwt");
+const { emailSendVerification } = require("../../helpers/sendEmail");
 
 //bo nardne verificatione email agar linke peshtr basarchubu
 const sendMeEmailVerification = async (req, res, next) => {
@@ -19,7 +19,10 @@ const sendMeEmailVerification = async (req, res, next) => {
       return;
     }
     //nardni emaile verification
-    const checkEmailSend = await sendEmail(userInfo.email, verifyEmailToken);
+    const checkEmailSend = await emailSendVerification(
+      userInfo.email,
+      verifyEmailToken
+    );
 
     if (!checkEmailSend) {
       next(

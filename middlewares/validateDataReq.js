@@ -32,7 +32,37 @@ const reqDataLogin = async (req, res, next) => {
     res.send(result);
   }
 };
+
+const reqDataSendEmail = async (req, res, next) => {
+  const result = await joi
+    .object({
+      email: joi.string().email().lowercase().required(),
+    })
+    .validateAsync(req.body);
+  if (!result.error) {
+    req.result = result;
+    next();
+  } else {
+    res.send(result);
+  }
+};
+const reqDataForgetPassowrd = async (req, res, next) => {
+  const result = await joi
+    .object({
+      password: joi.string().min(4).required(),
+      newPassword: joi.string().min(4).required(),
+    })
+    .validateAsync(req.body);
+  if (!result.error) {
+    req.result = result;
+    next();
+  } else {
+    res.send(result);
+  }
+};
 module.exports = {
   reqDataRegister,
   reqDataLogin,
+  reqDataForgetPassowrd,
+  reqDataSendEmail,
 };

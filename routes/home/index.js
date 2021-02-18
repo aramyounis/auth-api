@@ -5,7 +5,7 @@ const { verifyAccessToken } = require("../../helpers/jwt");
 const isAccountActive = require("../../middlewares/isAccountActive");
 const isEmailVerify = require("../../middlewares/isEmailVerify");
 const homeController = require("../../controllers/home_controller");
-
+const path = require("path");
 router.get(
   "/",
   verifyAccessToken,
