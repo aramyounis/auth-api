@@ -7,7 +7,7 @@ document
     validateRegister();
   });
 
-function validateRegister() {
+async function validateRegister() {
   var password = document.getElementById("password");
   var password2 = document.getElementById("password2");
 
@@ -47,12 +47,31 @@ function validateRegister() {
   }
 
   if (flag === 2) {
-    showbox();
     var pathname = window.location.pathname;
     pathname = pathname.split("/");
-    console.log(pathname[3]);
+
+    const config = {
+      withCredentials: true,
+    };
+    const res = await axios
+      .post(
+        "http://localhost:3000/auth/resetPassowrd",
+        {
+          newPassword: passwordValue,
+        },
+        config
+      )
+      .then((data) => {
+        showbox();
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response?.data) {
+          errorbox(err.response.data.error_message);
+        }
+      });
   } else {
-    errorbox();
+    errorbox("check Passowrds Failed");
   }
 
   function isEmail(email) {
@@ -85,9 +104,10 @@ function hidebox() {
 
 //------box regster error--------//
 
-function errorbox() {
+function errorbox(msg) {
+  const err_message = document.getElementById("err_msg");
+  err_message.innerText = msg;
   boxerror.classList.add("show-error-spinner");
-
   timmer = setTimeout(function () {
     hideboxerror();
   }, 4000);

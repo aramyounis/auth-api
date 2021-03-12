@@ -7,7 +7,9 @@ exports.up = async function (knex) {
     table.string("user_name").notNullable();
     table.string("email").notNullable();
     table.string("password").notNullable();
-    table.string("veriFyToken");
+    table.string("forgetPassToken");
+    table.string("LiveToken");
+    table.decimal("RefTokenVersion").defaultTo(0.0);
     table.boolean("verify").defaultTo(false);
     table.boolean("status").defaultTo(false);
     table.timestamp("created_at").defaultTo(knex.fn.now());

@@ -1,19 +1,22 @@
 const jwt = require("jsonwebtoken");
 const ApiError = require("../middlewares/error/ApiError");
 const path = require("path");
+
 module.exports = {
   //drust krdni access token
   signAccessToken: (userID, status) => {
     return new Promise((resolve, reject) => {
       const payload = {
         status: status,
-        expiresIn: "1h",
+      };
+      const option = {
+        expiresIn: "3m",
         issuer: "onetwo.com",
         audience: userID,
       };
       const secret = process.env.ACCESS_TOKEN_SECRET;
 
-      jwt.sign(payload, secret, (err, token) => {
+      jwt.sign(payload, secret, option, (err, token) => {
         if (err) reject(err);
         resolve(token);
       });
@@ -22,14 +25,18 @@ module.exports = {
   //verify krdni access token
   verifyAccessToken: (req, res, next) => {
     if (!req.headers["authorization"]) {
-      throw ApiError.badRequest("Unauthorized");
+      throw ApiError.authError("Unauthorized");
     }
 
     const token = req.headers["authorization"].split(" ")[1];
     console.log(req.headers["authorization"].split(" ")[1]);
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, payload) => {
       if (err) {
-        throw ApiError.badRequest("Unauthorized");
+        if (err.message === "jwt expired") {
+          console.log(err.message);
+          throw ApiError.authError("Token Expired");
+        }
+        throw ApiError.authError("Unauthorized");
       }
       req.payload = payload;
       console.log(payload);
@@ -42,6 +49,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       const payload = {
         status: status,
+        vrF: 0.0,
       };
       const secret = process.env.REFRESH_TOKEN_SECRET;
 
@@ -58,12 +66,11 @@ module.exports = {
   },
 
   //verify krdni refresh token
-  verifyRefreshToken(req, res, next) {
-    if (!req.headers["authorization"])
-      throw ApiError.badRequest("Unauthorized");
+  verifyRefreshToken: (req, res, next) => {
+    if (!req.headers["authorization"]) throw ApiError.authError("Unauthorized");
     const token = req.headers["authorization"].split(" ")[1];
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
-      if (err) throw ApiError.badRequest("Unauthorized");
+      if (err) throw ApiError.authError("Unauthorized");
       req.payload = payload;
       next();
     });
@@ -90,7 +97,7 @@ module.exports = {
   },
 
   //verify krdni email token
-  verifyEmailTokenToVerify(req, res, next) {
+  verifyEmailTokenToVerify: (req, res, next) => {
     const { verifyToken } = req.params;
     console.log(verifyToken);
     if (!verifyToken) {
@@ -128,7 +135,7 @@ module.exports = {
   },
 
   //verify krdni forget passowrd token
-  verifyForgetPassTokenParams(req, res, next) {
+  verifyForgetPassTokenParams: (req, res, next) => {
     const { forgetPassToken } = req.params;
     console.log(forgetPassToken);
     if (!forgetPassToken) {
@@ -149,13 +156,59 @@ module.exports = {
     }
   },
   //verify krdni forget passowrd token
-  verifyForgetPassToken(req, res, next) {
-    if (!req.headers["authorization"])
-      throw ApiError.badRequest("Unauthorized");
+  verifyForgetPassToken: (req, res, next) => {
+    const tokenForgetPass = req.cookies.fptk;
+    if (!tokenForgetPass) throw ApiError.badRequest("Update Failed!!!");
+    jwt.verify(
+      tokenForgetPass,
+      process.env.FORGET_PASS_SECRET,
+      (err, payload) => {
+        if (err) {
+          console.log(err);
+          throw ApiError.badRequest("Update Failed");
+        }
+        req.payload = payload;
+        req.forgetToken = tokenForgetPass;
+        next();
+      }
+    );
+  },
+
+  signLiveToken: (userID, Level) => {
+    return new Promise((resolve, reject) => {
+      const payload = {
+        Lv: Level,
+      };
+      const option = {
+        expiresIn: "20d",
+        issuer: "onetwo.com",
+        audience: userID,
+      };
+      const secret = process.env.LIVE_TOKEN_SECRET;
+
+      jwt.sign(payload, secret, option, (err, token) => {
+        if (err) reject(err);
+        resolve(token);
+      });
+    });
+  },
+  //verify krdni access token
+  verifyLiveToken: (req, res, next) => {
+    if (!req.headers["authorization"]) {
+      throw ApiError.authError("Unauthorized");
+    }
     const token = req.headers["authorization"].split(" ")[1];
-    jwt.verify(token, process.env.FORGET_PASS_SECRET, (err, payload) => {
-      if (err) throw ApiError.badRequest("Unauthorized");
+    console.log(req.headers["authorization"].split(" ")[1]);
+    jwt.verify(token, process.env.LIVE_TOKEN_SECRET, (err, payload) => {
+      if (err) {
+        if (err.message === "jwt expired") {
+          console.log(err.message);
+          throw ApiError.authError("Token Expired");
+        }
+        throw ApiError.authError("Unauthorized");
+      }
       req.payload = payload;
+      console.log(payload);
       next();
     });
   },

@@ -13,11 +13,7 @@ const sendEmailForgetPass = async (req, res, next) => {
       return user;
     });
     if (!userInfo) {
-      next(
-        ApiError.badRequest(
-          "Email Verification Not Sended Please Check You Information"
-        )
-      );
+      next(ApiError.badRequest("Fieled Please Check You Information"));
       return;
     }
     const forgetPassToken = await signForgetPassToken(
@@ -25,7 +21,15 @@ const sendEmailForgetPass = async (req, res, next) => {
       userInfo.status
     );
     console.log(forgetPassToken);
-
+    const setToken = await quires
+      .setForgetPassToken(userInfo.id, forgetPassToken)
+      .then((user) => {
+        return user;
+      });
+    if (!setToken) {
+      next(ApiError.badRequest("Fieled Please Tray Again"));
+      return;
+    }
     //nardni emaile verification
     const checkEmailSend = await emailSendForgetPassowrd(
       userInfo.email,
@@ -33,18 +37,14 @@ const sendEmailForgetPass = async (req, res, next) => {
     );
 
     if (!checkEmailSend) {
-      next(
-        ApiError.badRequest(
-          "Sorry Email Verification Not Sended Please Tray Again"
-        )
-      );
+      next(ApiError.badRequest("Fieled Please Tray Again"));
       return;
     }
 
     res.json({
       status: true,
       message:
-        "Successfully Email Verification Send Check Your Email, This Link Working For 1hour!",
+        "Successfully Email Send Check Your Email, This Link Working For 1hour!",
     });
   } catch (err) {
     console.log(err);

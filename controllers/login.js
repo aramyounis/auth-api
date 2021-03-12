@@ -1,6 +1,7 @@
 const quires = require("../Models/User_quires");
 const ApiError = require("../middlewares/error/ApiError");
-const { signAccessToken, signRefreshToken } = require("../helpers/jwt");
+
+const { create_AccessToken, create_RefreshToken } = require("../helpers/JWT");
 
 const login = async (req, res, next) => {
   const result = req.result;
@@ -17,22 +18,21 @@ const login = async (req, res, next) => {
     result.password
   );
   if (!checkPassword) throw ApiError.badRequest(`Email or password Invalid!`);
-  const Access_Token = await signAccessToken(checkEmail.id, checkEmail.status);
-  const Refresh_Token = await signRefreshToken(
+
+  const Access_Token = await create_AccessToken(
+    checkEmail.id,
+    checkEmail.status
+  );
+  const Refresh_Token = await create_RefreshToken(
     checkEmail.id,
     checkEmail.status
   );
 
   res.json({
     status: true,
-    Access_Token,
-    Refresh_Token,
-    user: {
-      UserName: checkEmail.user_name,
-      Email: checkEmail.email,
-      Verify: checkEmail.verify,
-      status: checkEmail.status,
-    },
+    actk: Access_Token,
+    rftk: Refresh_Token,
+    lvtk: checkEmail.LiveToken,
   });
 };
 

@@ -3,6 +3,9 @@ class ApiError {
     this.code = code;
     this.msg = msg;
   }
+  static authError(msg) {
+    return new ApiError(401, msg);
+  }
   static badRequest(msg) {
     return new ApiError(400, msg);
   }

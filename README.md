@@ -1,23 +1,34 @@
--onetwo_api
+\*onetwo_api
 (
 لە کاتی لۆگین بوونا لە کۆمپیتەرێکا لە داتابەیس لۆگین بوونەکەی هەڵەگیرێت کاتێک ویستی لە شوێنێکی ترەوە لۆگهین بکات بۆی نەتوانێت
 ئەگەر ویستی لە شوێنێکی تر داخڵبێت پێویستە خۆی لۆگاوت بکات یان ەمەیڵێکی بۆ ئەنێرین بۆ لۆگئاوت کردنەی ئەکاوتتەکەی لای خۆمانەوە)
 
--drust krdni migrate knex
--knex migrate:make migration_name
+\*بەکارهێنراوەکان
 
--run krdni migrate knex
--knex migrate:latest
+1. knex
+2. cors
+3. helmet
+4. joi
+5. nodemailer
+6. pg
+7. jsonwebtoken
+8. express
 
--srinaway data w table migrateka
--knex migrate:rollback
+*drust krdni migrate knex
+*knex migrate:make migration_name
 
--Routers راوتەکان
+*run krdni migrate knex
+*knex migrate:latest
 
--Authentication
+*srinaway data w table migrateka
+*knex migrate:rollback
+
+\*Routers راوتەکان
+
+\*Authentication
 
 1. auth/login POST Body(email , password)
-   -Midleware Used
+   \*Midleware Used
    1.reqDataLogin (بۆ دڵنیابوونەوە لە داتای نێردراو )
    2.login_Controller
 
@@ -29,7 +40,7 @@
    1.verifyAccessToken (بۆ دڵنیابوونەوە لە ڕاستی تۆکینەکە)
    2.getInformation_Controller
 
--Reset Passowrd 4. auth/emailforgetPassowrd POST Body(email)
+\*Reset Passowrd 4. auth/emailforgetPassowrd POST Body(email)
 1.reqDataSendEmail (بۆ دڵنیابوونەوە لە داتای نێردراو )
 2.sendEmailForgetPass (ناردنی ئیمەیڵ بۆ گێرانەوەی پاسۆرد)
 
@@ -42,15 +53,15 @@
    2.verifyForgetPassToken (بۆ دڵنیابوونەوە لە ڕاستی تۆکینەکە)
    3.changePassowrdAction (لەدوای ذڵنیابوونەوە لە داتا و تۆکین پاسۆردەکە ئەگۆڕێت)
 
--email verification 7. auth/emailVerify POST Header( Authentication AccessToken)
+\*email verification 7. auth/emailVerify POST Header( Authentication AccessToken)
 
 8. get/verify GET Params(verifyEmailToken)
 
--Refreshing Token 9. auth/refresh_token POST Header( Authentication RefreshToken)
+\*Refreshing Token 9. auth/refresh_token POST Header( Authentication RefreshToken)
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
--Middlewares میدڵوێرەکان
+\*Middlewares میدڵوێرەکان
 
 1. Error (بۆ گەڕاندنەوەی یەرۆر بە شێوەیەک کە هیچ زانیاریەکی ناو سێرڤەر نەگەڕێتەوە بۆ یوزەر)
 
@@ -58,12 +69,12 @@
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
--Models
+\*Models
 بۆ جێبەجێکردنی کویریەکانی داتابەیس
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
--Helpers یارمەتیدەرەکان
+\*Helpers یارمەتیدەرەکان
 
 1. JWT (ئەنێرێتەوە لەگەڵ ریکوێستێک JWT و چێک کردنی لە کاتی یوزەر JWT بۆ درووستکردی )
 

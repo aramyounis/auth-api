@@ -2,14 +2,13 @@
 const router = require("express-promise-router")();
 
 const {
-  verifyForgetPassTokenParams,
+  check_ForgetPassTokenParams,
+  check_VerifyToken,
+} = require("../../middlewares/JWT");
 
-  verifyEmailTokenToVerify,
-} = require("../../helpers/jwt");
+const { emailVerifyAction_controller } = require("../../controllers/Verify");
 
-const setEmailVerification = require("../../controllers/Verify_Controller/setEmailVerification");
-
-const forgetPassowrdPage = require("../../controllers/Password_Controller/forgetPassowrdPage");
+const { forgetPassowrdPage_controller } = require("../../controllers/Password");
 
 //login buni user
 //parametarakane {email,passowrd}
@@ -18,14 +17,13 @@ const forgetPassowrdPage = require("../../controllers/Password_Controller/forget
 //paramitarakae la regai query urlawa yat ka tokene forget passowrda
 router.get(
   "/forgetPassowrd/:forgetPassToken",
-  verifyForgetPassTokenParams,
-  forgetPassowrdPage
+  check_ForgetPassTokenParams,
+  forgetPassowrdPage_controller
 );
-
 router.get(
   "/verify/:verifyToken",
-  verifyEmailTokenToVerify,
-  setEmailVerification
+  check_VerifyToken,
+  emailVerifyAction_controller
 );
 
 //export krdnaway routekanman

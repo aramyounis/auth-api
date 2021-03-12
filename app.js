@@ -8,7 +8,7 @@ const app = express();
 require("dotenv").config();
 
 const apiErrorHandler = require("./middlewares/error/api_error_handler");
-
+const coockieParser = require("cookie-parser");
 //bang krdnaway routeakanman
 const auth = require("./routes/Auth");
 const home = require("./routes/home");
@@ -26,7 +26,6 @@ app.use(
     directives: {
       defaultSrc: [
         "'self'",
-        "''unsafe-inline'",
         "https://unpkg.com/axios@0.20.0-0/dist/axios.min.js",
       ],
     },
@@ -35,6 +34,7 @@ app.use(
 
 app.use(cors());
 app.use("/static", express.static("public"));
+app.use(coockieParser());
 //route root
 app.use(home);
 
@@ -44,12 +44,12 @@ app.use("/auth", auth);
 
 var corsOptions = {
   origin: "http://localhost:3000",
+  credentials: true,
 };
 app.use("/get", cors(corsOptions), get);
 //midlware
 //handel krdni error
 app.use(apiErrorHandler);
-
 app.use((req, res, next) => {
   res.status(404).sendFile(path.join(__dirname, "./public/errorPage.html"));
 });

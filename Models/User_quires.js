@@ -33,17 +33,33 @@ module.exports = {
       return await bcrypt.compare(password, user.password);
     });
   },
-  updateVerifyEmail: async (id) => {
+  updateVerifyEmail: async (id, liveToken) => {
     return knex("users")
       .where("id", "=", id)
       .update({ verify: true })
+      .update({ LiveToken: liveToken })
       .clearCounters();
   },
-  updatePassword: async (id, oldPass, newPass) => {
+  setForgetPassToken: async (id, forgetToken) => {
+    return knex("users")
+      .where("id", "=", id)
+      .update({ forgetPassToken: forgetToken })
+      .clearCounters();
+  },
+  updatePasswordForget: async (id, newPass) => {
     const salt = await bcrypt.genSalt(10);
     newPass = await bcrypt.hash(newPass, salt);
     return knex("users")
-      .where("id", "=", id, "password", "=", oldPass)
+      .where("id", "=", id)
+      .update({ password: newPass })
+      .update({ forgetPassToken: "" })
+      .clearCounters();
+  },
+  updatePasswordChange: async (id, pass, newPass) => {
+    const salt = await bcrypt.genSalt(10);
+    newPass = await bcrypt.hash(newPass, salt);
+    return knex("users")
+      .where("id", "=", id)
       .update({ password: newPass })
       .clearCounters();
   },

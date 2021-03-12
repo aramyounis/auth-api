@@ -4,7 +4,7 @@ const { signEmailTokenToVerify } = require("../../helpers/jwt");
 const { emailSendVerification } = require("../../helpers/sendEmail");
 
 //bo nardne verificatione email agar linke peshtr basarchubu
-const sendMeEmailVerification = async (req, res, next) => {
+const sendMeEmailVerify = async (req, res, next) => {
   try {
     const payload = req.payload;
     const verifyEmailToken = await signEmailTokenToVerify(
@@ -42,4 +42,4 @@ const sendMeEmailVerification = async (req, res, next) => {
   }
 };
 
-module.exports = sendMeEmailVerification;
+module.exports = sendMeEmailVerify;

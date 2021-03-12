@@ -1,7 +1,6 @@
 const quires = require("../../Models/User_quires");
-const ApiError = require("../../middlewares/error/ApiError");
-const jwt = require("jsonwebtoken");
 const path = require("path");
+const { signLiveToken } = require("../../helpers/jwt");
 
 //bo verify krdni useraka la kate krdnawai emailakay w krdnawai linkaka
 const setEmailVerification = async (req, res, next) => {
@@ -12,18 +11,16 @@ const setEmailVerification = async (req, res, next) => {
       .then(async (user) => {
         return user;
       });
-    //dllnyabunawa ka useraka bune habet
-    if (!checkUser) {
-      res.sendFile(path.join(__dirname, "../../public/errorPage.html"));
-    }
     //dllnyabunawa lawai accountaka verify nakrawa peshtr
-    else if (checkUser.verify) {
-      res.sendFile(path.join(__dirname, "../../public/errorPage.html"));
+    if (checkUser.verify) {
+      next();
+      return;
     }
-
+    const LiveToken = await signLiveToken(payload.aud, 3);
+    console.log(LiveToken);
     //agar verify nakrabu awa verify akret
     await quires
-      .updateVerifyEmail(payload.aud)
+      .updateVerifyEmail(payload.aud, LiveToken)
       .then(async () => {
         res.sendFile(
           path.join(__dirname, "../../public/verificationSuccessPage.html")
@@ -31,11 +28,13 @@ const setEmailVerification = async (req, res, next) => {
       })
       .catch((err) => {
         console.log(err);
-        res.sendFile(path.join(__dirname, "../../public/errorPage.html"));
+        next();
+        return;
       });
   } catch (error) {
     console.log(error);
-    res.sendFile(path.join(__dirname, "../../public/errorPage.html"));
+    next();
+    return;
   }
 };
 
