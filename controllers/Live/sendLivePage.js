@@ -6,7 +6,7 @@ const sendLivePage = async (req, res, next) => {
   //   return user;
   // });
   res.json({
-    Lv: payload.Lv,
+    Lv: payload.Level,
   });
 };
 

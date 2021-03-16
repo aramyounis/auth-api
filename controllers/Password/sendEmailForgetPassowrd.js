@@ -1,6 +1,6 @@
 const ApiError = require("../../middlewares/error/ApiError");
 const quires = require("../../Models/User_quires");
-const { signForgetPassToken } = require("../../helpers/jwt");
+const { create_ForgetPassToken } = require("../../helpers/jwt");
 const { emailSendForgetPassowrd } = require("../../helpers/sendEmail");
 
 //bo nardne verificatione email agar linke peshtr basarchubu
@@ -16,7 +16,7 @@ const sendEmailForgetPass = async (req, res, next) => {
       next(ApiError.badRequest("Fieled Please Check You Information"));
       return;
     }
-    const forgetPassToken = await signForgetPassToken(
+    const forgetPassToken = await create_ForgetPassToken(
       userInfo.id,
       userInfo.status
     );

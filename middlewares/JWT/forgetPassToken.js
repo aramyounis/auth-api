@@ -22,9 +22,9 @@ const check_ForgetPassTokenParams = (req, res, next) => {
 //check_ krdni forget passowrd token
 const check_ForgetPassToken = (req, res, next) => {
   const tokenForgetPass = req.cookies.fptk;
-  if (!tokenForgetPass) throw ApiError.badRequest("Update Failed");
+  if (!tokenForgetPass) throw ApiError.authError("Update Failed");
   verify(tokenForgetPass, process.env.FORGET_PASS_SECRET, (err, payload) => {
-    if (err) throw ApiError.badRequest("Update Failed");
+    if (err) throw ApiError.authError("Update Failed");
     req.payload = payload;
     req.forgetToken = tokenForgetPass;
     next();

@@ -6,12 +6,14 @@ const getInformation = async (req, res, next) => {
   const user = await quires.getuser.byID(payload.aud).then((user) => {
     return user;
   });
-  var dayYouHave = 0;
-  const decoded = jwt.decode(user.LiveToken, process.env.LIVE_TOKEN_SECRET);
-  createat = new Date(decoded.iat * 1000);
-  expired = new Date(decoded.exp * 1000);
-  var Difference_In_Time = expired.getTime() - createat.getTime();
-  dayYouHave = Difference_In_Time / (1000 * 3600 * 24);
+  if (user.LiveToken) {
+    var dayYouHave = 0;
+    const decoded = jwt.decode(user.LiveToken, process.env.LIVE_TOKEN_SECRET);
+    createat = new Date(decoded.iat * 1000);
+    expired = new Date(decoded.exp * 1000);
+    var Difference_In_Time = expired.getTime() - createat.getTime();
+    dayYouHave = Difference_In_Time / (1000 * 3600 * 24);
+  }
 
   res.json({
     dayYouHave: dayYouHave,
