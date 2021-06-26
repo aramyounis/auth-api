@@ -1,83 +1,93 @@
-\*onetwo_api
-(
-لە کاتی لۆگین بوونا لە کۆمپیتەرێکا لە داتابەیس لۆگین بوونەکەی هەڵەگیرێت کاتێک ویستی لە شوێنێکی ترەوە لۆگهین بکات بۆی نەتوانێت
-ئەگەر ویستی لە شوێنێکی تر داخڵبێت پێویستە خۆی لۆگاوت بکات یان ەمەیڵێکی بۆ ئەنێرین بۆ لۆگئاوت کردنەی ئەکاوتتەکەی لای خۆمانەوە)
+## API Reference
 
-\*بەکارهێنراوەکان
+#### Register User
 
-1. knex
-2. cors
-3. helmet
-4. joi
-5. nodemailer
-6. pg
-7. jsonwebtoken
-8. express
+```http
+  POST /api//register
+```
 
-*drust krdni migrate knex
-*knex migrate:make migration_name
+| Parameter  | Type     | Description                                        |
+| :--------- | :------- | :------------------------------------------------- |
+| `email`    | `string` | **Required**. Your Email , Must be a valid email   |
+| `username` | `string` | **Required**. Your Username ,Length grater than 4  |
+| `password` | `string` | **Required**. Your password , Length grater than 4 |
 
-*run krdni migrate knex
-*knex migrate:latest
+#### Server Response
 
-*srinaway data w table migrateka
-*knex migrate:rollback
+- ئەگەر هەر هەڵەیەک هەبێت لەو زانیاریانەی نیردراوە ئەوا سیرڤەر ئیرۆر ئەنێریتەوە لەگەڵ نامەیەکی ئیرۆرەکە بە کۆدی ٤٢٢ کە بە واتای ئەوە دێت زانیاریەکە هەڵەی تیایە بۆ نمونە ئەگەر ئیمیڵێک بە شێوازەێکی هەڵە بنوسیت جوابدانەوەی سێرڤەر بەم شیوە دەبێت
+  ```javascript
+  return {
+    status: false,
+    error_code: 422,
+    error_message: '"email" must be a valid email',
+  };
+  ```
+- ئەگەر هیچ هەڵەیەک لە زانیاریەکانت نەبوو ئەوا سیرڤەر نامەیەک ئەنێریتەوە کە بە سەرکەووتوی تۆمار کراوە هەروەها ڕاستەوخۆ ئیمێڵێ دڵنیاکردنەوە ئەنێردرێت بۆ ئەو ئیمەیڵە کە خۆت پێی تۆمارکردوە لە ئیمەیڵەکەتەوە پێویستە دڵنیا بکەیتەوە بۆ ئەوەی هەژمارەکە چالاک بکرێت
 
-\*Routers راوتەکان
+```javascript
+return {
+  status: true,
+  message: "Successfuly Registered Check Your Email To Verify Your Account",
+};
+```
 
-\*Authentication
+#### Login User
 
-1. auth/login POST Body(email , password)
-   \*Midleware Used
-   1.reqDataLogin (بۆ دڵنیابوونەوە لە داتای نێردراو )
-   2.login_Controller
+```http
+  POST /api//login
+```
 
-2. auth/register POST Body(email ,username, password)
-   1.reqDataRegister (بۆ دڵنیابوونەوە لە داتای نێردراو )
-   2.register_Controller
+| Parameter  | Type     | Description                                        |
+| :--------- | :------- | :------------------------------------------------- |
+| `email`    | `string` | **Required**. Your Email , Must be a valid email   |
+| `password` | `string` | **Required**. Your password , Length grater than 4 |
 
-3. auth/getInformation POST Header( Authentication AccessToken)
-   1.verifyAccessToken (بۆ دڵنیابوونەوە لە ڕاستی تۆکینەکە)
-   2.getInformation_Controller
+#### Server Response
 
-\*Reset Passowrd 4. auth/emailforgetPassowrd POST Body(email)
-1.reqDataSendEmail (بۆ دڵنیابوونەوە لە داتای نێردراو )
-2.sendEmailForgetPass (ناردنی ئیمەیڵ بۆ گێرانەوەی پاسۆرد)
+- ئەگەر هەر هەڵەیەک هەبێت لەو زانیاریانەی نیردراوە ئەوا سیرڤەر ئیرۆر ئەنێریتەوە لەگەڵ نامەیەکی ئیرۆرەکە بە کۆدی ٤٢٢ کە بە واتای ئەوە دێت زانیاریەکە هەڵەی تیایە بۆ نمونە ئەگەر ئیمیڵێک بە شێوازەێکی هەڵە بنوسیت جوابدانەوەی سێرڤەر بەم شیوە دەبێت
 
-5. get/forgetPassowrd GET Params(forgetPassToken)
-   1.verifyForgetPassTokenParams (بۆ دڵنیابوونەوە لە داتای نێردراو )
-   2.forgetPassowrdPage (ناردنەوەی پەیگی پاسۆرد لە کاتی کلیک کردن لە فۆرگێت پاسۆرد لە ئیمەیڵ)
+  ```javascript
+  return {
+    status: false,
+    error_code: 422,
+    error_message: '"email" must be a valid email',
+  };
+  ```
 
-6. auth/resetPassowrd POST Body(password, newPassword) Header(Authentication forgetPassToken)
-   1.reqDataForgetPassowrd (بۆ دڵنیابوونەوە لە داتای نێردراو )
-   2.verifyForgetPassToken (بۆ دڵنیابوونەوە لە ڕاستی تۆکینەکە)
-   3.changePassowrdAction (لەدوای ذڵنیابوونەوە لە داتا و تۆکین پاسۆردەکە ئەگۆڕێت)
+- ئەگەر تێپەڕە وشە یەخود ئیمەیڵەکەت هەڵەبێت ئەوا جوابدانەوەی سێرڤەر بەم جۆرە ئەبێت
 
-\*email verification 7. auth/emailVerify POST Header( Authentication AccessToken)
+  ```javascript
+  return {
+    status: false,
+    error_code: 400,
+    error_message: "Email or Password Invalid!",
+  };
+  ```
 
-8. get/verify GET Params(verifyEmailToken)
+- درووست ئەکرێت ئەنیردرێنەوە ( token )ئەگەر زانیاریەکان ڕاستبن ئەوا لە سێرڤەر دوو
+- کان بەکاریەت بۆ ناسینەوەی بەکارهێنەر(token) لەکاتی ناردنی ناردنی داواکاری تردا
 
-\*Refreshing Token 9. auth/refresh_token POST Header( Authentication RefreshToken)
+```javascript
+return {
+  status: true,
+  accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MjQ2ODQ0NDgsImV4cCI6MTYyNDY4NDYyOCwiYXVkIjoiNGE5MmRhZWMtY2JlZi00MjczLThlYmQtY2EyMzJhMDYxYzljIiwiaXNzIjoib25ldHdvLmNvbSJ9.2ArJcg_3qSM-UPea7cl-_Ql8Jc6KRnyh7_mbU8wkWo0",
+  refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MjQ2ODQ0NDgsImV4cCI6MTYyNTI4OTI0OCwiYXVkIjoiNGE5MmRhZWMtY2JlZi00MjczLThlYmQtY2EyMzJhMDYxYzljIiwiaXNzIjoib25ldHdvLmNvbSJ9.Ifmie3pnC1xKeBx_eYqQHvqjgf3orzGB1H_peMgOevo",
+};
+```
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+### دەستاواژەکان
 
-\*Middlewares میدڵوێرەکان
+- token : بە واتای نازنامە یاخود ناسینەوە یەت کاتێک ئێمە بەکارهێنەرێکمان ئەچیتە ژوورەوە پێویستە نازنامەیەک بۆ ئەم بەکارهێنەرە دروست بکەین کە هەر داواکاریەک نێردرا بزانین کام بەکارهێنەر ناردویەتی و دڵنیابینەوە لە ناسنامەکەی پاشان وەڵامی داواکاریەکەی بۆ بنێرینەوە
 
-1. Error (بۆ گەڕاندنەوەی یەرۆر بە شێوەیەک کە هیچ زانیاریەکی ناو سێرڤەر نەگەڕێتەوە بۆ یوزەر)
 
-2. ValidateDataReq (بۆ ذڵنیابوونەوە لەو زانیاریانەی کە یوزەر ئەینێرێت وەک ئیمەیڵ و پاسسۆرد لە کاتی لۆگین یان هەر ڕاوتێکی تر)
+### (accessToken , refreshToken) بەکارهێنانی 
+- بۆ زیاتر پاریزراوی سیستەمەکەمان دوو ناسنامە درووست ئەکەین بۆ بەکەرهێنەر کە یەکێکیان بەکارهێنەر لەڕێگەیەوە داواکاریەکانی پێ ئەنەێرێت ئەویتریان بۆ تازاکردنەوەی ناسنامە سەرەکیەکەیە چونکە پێویستە ئەو ناسنامەیە تەنها بۆ ماوەی چەند خولەکێکی کەم کار بکات کە لەگەڵ داواکاریاکان ئەنیردرێت هەرکاتێک کاتەکەی تاواو بوو لە ڕێگەی ناسنامەی دوومەوە بە ناردنی داواکاریەک بۆ سێرڤەر ناسنامەیەکی تازامەن بۆ بنێرێتەوە ناسنامەی دوەمیشمان بۆ ماوەی هەفتە یاخود مانگێک کاربکات باشترە
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- ئەشتوانرێت تەنها ناسنامە سەرەکیەکە بەکەربهێنرێت بەڵام ئەوکاتە پێویستە ماوەی بەسەرچونی زیاد بکرێت بۆ ئەوەی بەکارهێنەر لە دوای چەند خولەکێک نەکرێتە دەرەوە بەڵام ئەم ڕێگایەیان تا ڕادەیاک بۆ لایەنی پارێزراوی باش نیە
 
-\*Models
-بۆ جێبەجێکردنی کویریەکانی داتابەیس
+- داڕشتنەوەی ئەمە پێویستە لە کاتی دروستکردنی ڕوکارا ڕەچاو بکرێت لە ڕوکارەکەیا ناسنامەکان نوێ بکرێنەوە بە شێوەیەک کە بەکەرهێنەر توشی چونەدەرەوەی ئۆتۆماتیکی نەبێت بەهۆی ناسنامەکەوە
 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-\*Helpers یارمەتیدەرەکان
+#### add(num1, num2)
 
-1. JWT (ئەنێرێتەوە لەگەڵ ریکوێستێک JWT و چێک کردنی لە کاتی یوزەر JWT بۆ درووستکردی )
-
-2. SendEmail (بۆ ناردنی ئیمەیڵ)
-
-3. generateHTMLFiles (کە ڵەگەڵ ئەو تۆکنەی دروست ئەکڕێت بۆ گەڕانەوەی پاسۆرد یان دڵنیابونەوە لە ئیمەیڵ بە ئیمەیڵ ئەنێردرێت HTML بۆ دروستکردنی فایلی )
+Takes two numbers and returns the sum.
