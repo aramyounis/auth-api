@@ -3,7 +3,7 @@
 #### Register User
 
 ```http
-  POST /api//register
+  POST /api/register
 ```
 
 | Parameter  | Type     | Description                                        |
@@ -34,7 +34,7 @@ return {
 #### Login User
 
 ```http
-  POST /api//login
+  POST /api/login
 ```
 
 | Parameter  | Type     | Description                                        |
