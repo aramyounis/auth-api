@@ -5,7 +5,6 @@ const {
   check_ForgetPassTokenParams,
 } = require("./forgetPassToken");
 const check_VerifyToken = require("./verifyToken");
-const check_LiveToken = require("./liveToken");
 
 module.exports = {
   check_AccessToken,
@@ -13,5 +12,4 @@ module.exports = {
   check_ForgetPassToken,
   check_ForgetPassTokenParams,
   check_VerifyToken,
-  check_LiveToken,
 };

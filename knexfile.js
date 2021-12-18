@@ -3,9 +3,15 @@ module.exports = {
   //kate devlopment
   development: {
     //jore databaseaka ka bakari ahenin
-    client: "postgresql",
+    client: "pg",
     //linke databaseakaman
-    connection: "postgresql://postgres:1081995@localhost/onetwodb",
+    connection: {
+      host: "127.0.0.1",
+      user: "postgres",
+      password: "1081995",
+      database: "auth_db",
+      charset: "utf8",
+    },
     migrations: {
       //shwene pashakawt buni migrationakan
       directory: __dirname + "/db/migrations",

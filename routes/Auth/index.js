@@ -6,7 +6,6 @@ const {
   login_ValidationData,
   forgetPassword_ValidationData,
   register_ValidationData,
-  liveSetting_ValidationData,
   sendEmail_ValidationData,
 } = require("../../validation");
 
@@ -16,13 +15,7 @@ const {
   register_controller,
   refreshToken_controller,
   getInformation_controller,
-  payed_controller,
 } = require("../../controllers");
-
-const {
-  sendLivePage_controller,
-  sendLiveSettings_controller,
-} = require("../../controllers/Live");
 
 const {
   forgetPasswordAction_controller,
@@ -37,7 +30,6 @@ const {
   check_AccessToken,
   check_RefreshToken,
   check_ForgetPassToken,
-  check_LiveToken,
 } = require("../../middlewares/JWT");
 
 //login buni user
@@ -75,12 +67,5 @@ router.post("/getInformation", check_AccessToken, getInformation_controller);
 
 router.post("/emailVerify", check_AccessToken, sendMeEmailVerify_controller);
 
-router.post("/getLivePage", check_LiveToken, sendLivePage_controller);
-router.post(
-  "/getLiveSettings",
-  check_LiveToken,
-  liveSetting_ValidationData,
-  sendLiveSettings_controller
-);
 //export krdnaway routekanman
 module.exports = router;

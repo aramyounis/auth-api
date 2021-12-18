@@ -1,6 +1,5 @@
 const quires = require("../../Models/User_quires");
 const path = require("path");
-const { create_LiveToken } = require("../../helpers/jwt");
 
 //bo verify krdni useraka la kate krdnawai emailakay w krdnawai linkaka
 const setEmailVerification = async (req, res, next) => {
@@ -16,11 +15,9 @@ const setEmailVerification = async (req, res, next) => {
       next();
       return;
     }
-    const LiveToken = await create_LiveToken(payload.aud, 3);
-    console.log(LiveToken);
     //agar verify nakrabu awa verify akret
     await quires
-      .updateVerifyEmail(payload.aud, LiveToken)
+      .updateVerifyEmail(payload.aud)
       .then(async () => {
         res.sendFile(
           path.join(__dirname, "../../public/verificationSuccessPage.html")

@@ -15,6 +15,9 @@ const { forgetPassowrdPage_controller } = require("../../controllers/Password");
 
 //la kate krdnawai linke krdnawai aw linkai  ba email bo user chwa am pageae bo akretawa ba pey tokenakai
 //paramitarakae la regai query urlawa yat ka tokene forget passowrda
+router.get("/", (req, res) => {
+  res.send("ok");
+});
 router.get(
   "/forgetPassowrd/:forgetPassToken",
   check_ForgetPassTokenParams,

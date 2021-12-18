@@ -22,7 +22,7 @@ module.exports = {
     },
   },
   //bo tomarkrdni user
-  setuser: async function (user_name, email, password) {
+  setUser: async function (user_name, email, password) {
     const salt = await bcrypt.genSalt(10);
     console.log(password);
     password = await bcrypt.hash(password, salt);
@@ -37,7 +37,6 @@ module.exports = {
     return knex("users")
       .where("id", "=", id)
       .update({ verify: true })
-      .update({ LiveToken: liveToken })
       .clearCounters();
   },
   setForgetPassToken: async (id, forgetToken) => {
@@ -55,6 +54,7 @@ module.exports = {
       .update({ forgetPassToken: "" })
       .clearCounters();
   },
+
   updatePasswordChange: async (id, pass, newPass) => {
     const salt = await bcrypt.genSalt(10);
     newPass = await bcrypt.hash(newPass, salt);

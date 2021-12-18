@@ -29,7 +29,7 @@ const register = async (req, res, next) => {
   //tomar krdni useraka agar hich errorek nabu
 
   const userTokens = await quires
-    .setuser(result.username, result.email, result.password)
+    .setUser(result.username, result.email, result.password)
     .then(async () => {
       const userInfo = await quires.getuser.byEmail(result.email);
 
