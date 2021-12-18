@@ -1,5 +1,4 @@
 
-
 ## Setup Project
 
 to install packages
@@ -15,6 +14,22 @@ install knex globally
   npm install -g knex 
 ```
 
+to run database migrations
+
+```bash
+  knex:latest
+```
+to rollback database migrations
+
+```bash
+  knex:rollback
+```
+
+run server
+
+```bash
+  yarn start
+```
 
 
 
