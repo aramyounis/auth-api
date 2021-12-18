@@ -1,3 +1,24 @@
+
+
+## Setup Project
+
+to install packages
+
+```bash
+  yarn add
+  npm install
+```
+
+install knex globally
+
+```bash
+  npm install -g knex 
+```
+
+
+
+
+
 ## API Reference
 
 #### Register User
