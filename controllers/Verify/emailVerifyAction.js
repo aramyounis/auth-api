@@ -1,6 +1,6 @@
 const quires = require("../../Models/User_quires");
 const path = require("path");
-const { create_LiveToken } = require("../../helpers/jwt");
+const { create_LiveToken } = require("../../helpers/JWT");
 
 //bo verify krdni useraka la kate krdnawai emailakay w krdnawai linkaka
 const setEmailVerification = async (req, res, next) => {

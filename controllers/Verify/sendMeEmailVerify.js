@@ -1,6 +1,6 @@
 const ApiError = require("../../middlewares/error/ApiError");
 const quires = require("../../Models/User_quires");
-const { signEmailTokenToVerify } = require("../../helpers/jwt");
+const { signEmailTokenToVerify } = require("../../helpers/JWT");
 const { emailSendVerification } = require("../../helpers/sendEmail");
 
 //bo nardne verificatione email agar linke peshtr basarchubu

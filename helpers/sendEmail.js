@@ -6,7 +6,7 @@ const {
   generateVerificationHtml,
   generateForgetPassowrdHtml,
 } = require("./generateHtmlFiles");
-const EMAIL_PASSOWRD = process.env.EMAIL_PASSOWRD;
+const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 const EMAIL_HOST = process.env.EMAIL_HOST;
 
 //nardni emaile verification
@@ -18,13 +18,13 @@ const emailSendVerification = async (email, verifyEmailToken) => {
       service: "gmail",
       auth: {
         user: EMAIL_HOST,
-        pass: EMAIL_PASSOWRD,
+        pass: EMAIL_PASSWORD,
       },
     });
 
     const data = {
-      to: email, // Change to your recipient
-      from: EMAIL_HOST, // Change to your verified sender
+      to: email,
+      from: EMAIL_HOST,
       subject: "VERIFICATION ONETWO",
       text: "VERIFY YOUR ACCOUNT",
       html: html,
@@ -51,7 +51,7 @@ const emailSendForgetPassowrd = async (email, verifyEmailToken) => {
       service: "gmail",
       auth: {
         user: EMAIL_HOST,
-        pass: EMAIL_PASSOWRD,
+        pass: EMAIL_PASSWORD,
       },
     });
 

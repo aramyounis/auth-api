@@ -1,6 +1,6 @@
 const ApiError = require("../../middlewares/error/ApiError");
 const quires = require("../../Models/User_quires");
-const { create_ForgetPassToken } = require("../../helpers/jwt");
+const { create_ForgetPassToken } = require("../../helpers/JWT");
 const { emailSendForgetPassowrd } = require("../../helpers/sendEmail");
 
 //bo nardne verificatione email agar linke peshtr basarchubu

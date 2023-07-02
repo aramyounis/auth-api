@@ -312,7 +312,7 @@ const generateVerificationHtml = (verifyEmailToken) => {
   return html;
 };
 
-generateForgetPassowrdHtml = (forgetPassowrdToken) => {
+generateForgetPasswordHtml = (forgetPassowrdToken) => {
   const html = `<!DOCTYPE html>
   <html>
     <head>
@@ -628,5 +628,5 @@ generateForgetPassowrdHtml = (forgetPassowrdToken) => {
 };
 module.exports = {
   generateVerificationHtml,
-  generateForgetPassowrdHtml,
+  generateForgetPasswordHtml,
 };
